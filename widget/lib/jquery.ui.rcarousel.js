@@ -6,6 +6,8 @@
 				_self = this,
 				options = this.options;
 
+			this.originalHTML = $root.html();
+
 			// if options were default there should be no problem
             // check if user set options before init: $('element').rcarousel({with: "foo", visible: 3});
             // in above example exception will be thrown because 'with' should be a number!
@@ -76,7 +78,10 @@
 			// broadcast event
 			this._trigger( "start" );
 		},
-		
+		destroy: function() {
+			$.Widget.prototype.destroy.call( this );
+			$( this.element ).html(this.originalHTML).attr('style', '');
+		},
 		_addElement: function( jQueryElement, direction ) {
 			var $root = $( this.element ),
 				$content = $root.find( "div.wrapper" ),
